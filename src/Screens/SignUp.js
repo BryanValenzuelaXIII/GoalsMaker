@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert} from "react-native";
+import {signUpAxios} from '../utils/backendCall'
 
 const SignUp = function(){
 
@@ -24,6 +25,11 @@ const SignUp = function(){
             console.log(err);
             Alert.alert('Error something went wrong')
         }
+    }
+
+    const actualSignUp = async () => {
+        const response = await signUpAxios(userName, email, password);
+        Alert.alert(response.data.message)
     }
 
     return(

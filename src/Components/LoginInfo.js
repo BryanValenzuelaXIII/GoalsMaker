@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
+import {storage} from '../utils/createMMKV'
 
 const AndroidUrl = 'http://10.0.2.2:8000/api/users/login'
 
@@ -26,7 +27,8 @@ const LoginInfo = function({navigation}){
             if(response.data.success){
                 const token = response.data.data.authToken;
                 //console.log(token);
-                await AsyncStorage.setItem("token", token);
+                //storage.set("token", token);
+                console.log(storage.getString("token"));
                 successLogin();
             }
             
