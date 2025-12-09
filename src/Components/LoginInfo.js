@@ -7,7 +7,6 @@ import {storage} from '../utils/createMMKV'
 const AndroidUrl = 'http://10.0.2.2:8000/api/users/login'
 
 const LoginInfo = function({navigation}){
-    //const navigation = useNavigation();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -27,7 +26,7 @@ const LoginInfo = function({navigation}){
             if(response.data.success){
                 const token = response.data.data.authToken;
                 //console.log(token);
-                //storage.set("token", token);
+                storage.set("token", token);
                 console.log(storage.getString("token"));
                 successLogin();
             }
