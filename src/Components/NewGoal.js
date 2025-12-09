@@ -1,16 +1,16 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import {View, Text, StyleSheet, TouchableOpacity, TextInput} from 'react-native';
 
-//const NewGoal = forwardRef(function NewGoal (props, ref){
-const NewGoal = () =>{
-    const [goal, setGoal] = useState();
+const NewGoal = forwardRef(function NewGoal (props, ref){
+//const NewGoal = () =>{
+    const [goal, setGoal] = useState("string");
 
-    /*useImperativeHandle(ref, () => {
-        return(sendGoal)
-    })*/
+    useImperativeHandle(ref, () => {
+        sendGoal
+    })
 
     const sendGoal= () => {
-        return goal
+        setGoal('');
     }
 
     return(
@@ -33,13 +33,13 @@ const NewGoal = () =>{
             </View>
         </View>
     )
-}//)
+})
 
 export default NewGoal;
 
 const styles = StyleSheet.create(
     {
-        container: {flex: 1, flexDirection: 'column'},
+        container: {flex: 1, justifyContent: 'flex-end'},
         twoMain: {flex: 1, flexDirection: 'column'},
         texBox: {borderWidth: 2}
     }
