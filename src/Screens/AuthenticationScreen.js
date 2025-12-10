@@ -1,9 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, KeyboardAvoidingView } from "react-native";
+import { View, Text, StyleSheet, KeyboardAvoidingView, Button } from "react-native";
 import LoginInfo from '../Components/LoginInfo'
+import {useDispatch, useSelector} from 'react-redux';
+import {increament, decrement} from '../store/userSlice'
+
 
 const AuthenticationScreen = function({navigation}){
 
+    const contador = useSelector(state => state.counter);
+    const dispatcher = useDispatch();
+    console.log("Counter is", contador);
 
     return(
         <KeyboardAvoidingView
@@ -14,6 +20,19 @@ const AuthenticationScreen = function({navigation}){
 
             <View style= {styles.square}>
                 <LoginInfo navigation={navigation} />
+            </View>
+            <View>
+                <Button 
+                title="increment"
+                onPress={() => dispatcher(increament())}
+                />
+                <Button 
+                title="decrement"
+                onPress={() => dispatcher(decrement())}
+                />
+                <Text>
+                    {contador.value}
+                </Text>
             </View>
         </View>
         </KeyboardAvoidingView>

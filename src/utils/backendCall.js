@@ -10,7 +10,7 @@ const url = axios.create({
 
 url.interceptors.request.use(
     (config) => {
-        config.headers.Accept = 'application/json' //why?
+        config.headers.Accept = 'application/json' 
         const token = storage.getString('token');
         if(token)
              config.headers.Authorization = `Bearer ${token}`;

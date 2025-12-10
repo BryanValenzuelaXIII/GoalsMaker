@@ -12,12 +12,16 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import Navigation from './src/Navigation';
+import store from './src/store/myStore';
+import { Provider } from 'react-redux';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
+    <Provider store={store}>
       <Navigation />
+    </Provider>
   );
 }
 

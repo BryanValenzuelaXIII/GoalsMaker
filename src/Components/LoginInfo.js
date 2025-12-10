@@ -16,7 +16,7 @@ const LoginInfo = function({navigation}){
     }
 
     const signIn = async() =>{
-        logIn(email, password);
+        await logIn(email, password);
         if(storage.getString("token"))
             successLogin();
         /*try{
