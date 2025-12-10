@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
 import {storage} from '../utils/createMMKV'
+import { logIn } from "../utils/backendCall";
 
 const AndroidUrl = 'http://10.0.2.2:8000/api/users/login'
 
@@ -16,7 +16,9 @@ const LoginInfo = function({navigation}){
     }
 
     const signIn = async() =>{
-        try{
+        logIn(email, password);
+        successLogin();
+        /*try{
             const response = await axios.post(AndroidUrl, {
                email: email,
                password: password
@@ -34,7 +36,8 @@ const LoginInfo = function({navigation}){
         }catch(err){
             console.log(err);
             Alert.alert('Error something went wrong')
-        }
+        }*/
+
     }
 
     const signUp = useCallback(() => {
@@ -68,7 +71,7 @@ const LoginInfo = function({navigation}){
                         Password
                     </Text>
                     <TextInput 
-                        autoCapitalize={false}
+                        autoCapitalize="none"
                         autoCorrect={false}
                         placeholder="Enter password"
                         secureTextEntry={true}

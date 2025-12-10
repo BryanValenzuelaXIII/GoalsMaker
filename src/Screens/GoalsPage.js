@@ -1,11 +1,22 @@
-import React, { useRef } from "react";
-import { View, Text, StyleSheet, TextInput, Button} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, TextInput, Button, FlatList} from "react-native";
 import {storage} from '../utils/createMMKV'
 import NewGoal from '../Components/NewGoal'
+import LogOut from '../Components/LogOut'
+import {getGoals} from '../utils/backendCall'
 
 const GoalsPage = () => {
 
     const theGoal =  useRef();
+    const [goals, setGoals] = useState();
+
+    useEffect(()=>{
+        getGoals;
+    }, [])
+
+    const getGoals = async() =>{
+        setGoals(getGoals());
+    }
 
     return(
         <View style={styles.container}>
@@ -14,6 +25,11 @@ const GoalsPage = () => {
                     This is the goals Page!
                     {/*'\n'} The key is {storage.getString("token")*/}
                 </Text>
+                <LogOut />
+                {/* <FlatList 
+                    data={goals}
+                    
+                /> */}
             </View>
 
             <View style={styles.container}>

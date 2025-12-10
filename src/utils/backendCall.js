@@ -1,4 +1,6 @@
-import React from "react"
+import React from "react";
+import axios from "axios";
+import {storage} from '../utils/createMMKV'
 
 const signUp = async(userName, email, password) => {
 
@@ -18,7 +20,7 @@ const signUp = async(userName, email, password) => {
         }
 }
 
-const signIn = async(email, password) => {
+const logIn = async(email, password) => {
 
     const AndroidUrl = 'http://10.0.2.2:8000/api/users/login'
 
@@ -30,7 +32,8 @@ const signIn = async(email, password) => {
             console.log(response);
             if(response.data.success){
                 const token = response.data.data.authToken;
-                await AsyncStorage.setItem("token", token);
+                storage.set("token", token);
+                console.log(storage.getString("token"));
                 return response;
             }
             return null;
@@ -40,4 +43,21 @@ const signIn = async(email, password) => {
         }
 }
 
-export {signUp, signIn};
+const postGoal = async(goal) => {
+    const ANDROIDURL = 'http://10.0.2.2:8000/api/goals';
+
+    try{
+        const response = await axios.post(ANDROIDURL, {
+            title: goal 
+        }, {
+            headers: {
+                Authorization: `Bearer ${storage.getString("token")}`
+            }
+        })
+        console.log(response);
+    } catch(e){
+        console.log("Error making the goal: " + e);
+    }
+}
+
+export {signUp, logIn, postGoal};
