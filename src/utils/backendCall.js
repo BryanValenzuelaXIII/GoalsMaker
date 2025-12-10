@@ -1,6 +1,23 @@
 import React from "react";
 import axios from "axios";
 import {storage} from '../utils/createMMKV'
+import { Platform } from "react-native";
+
+const url = axios.create({
+    baseURL:
+    Platform.OS === 'ios'? 'http://localhost:8000/api/' : 'http://10.0.2.2:8000/api/'
+});
+
+url.interceptors.request.use(
+    (config) => {
+        config.headers.Accept = 'application/json' //why?
+        const token = storage.getString('token');
+        if(token)
+             config.headers.Authorization = `Bearer ${token}`;
+        return config
+    },
+    (error) =>{Promise.reject(error)}
+)
 
 const signUp = async(userName, email, password) => {
 
@@ -43,6 +60,20 @@ const logIn = async(email, password) => {
         }
 }
 
+const getGoals = async() => {
+    const ANDROIDURL = 'http://10.0.2.2:8000/api/goals';
+
+    try{
+        const response = await axios.get(ANDROIDURL, 
+            {headers: {
+                Authorization: `Bearer ${storage.getString("token")}`
+            }} )
+            console.log(response);
+    } catch (e){
+        console.log(e)
+    }
+}
+
 const postGoal = async(goal) => {
     const ANDROIDURL = 'http://10.0.2.2:8000/api/goals';
 
@@ -60,4 +91,21 @@ const postGoal = async(goal) => {
     }
 }
 
-export {signUp, logIn, postGoal};
+const deleteGoal = async(id) => {
+    const ANDROIDURL = 'http://10.0.2.2:8000/api/goals';
+
+    try{
+        const response = await axios.delete(ANDROIDURL, {
+            id: id 
+        }, {
+            headers: {
+                Authorization: `Bearer ${storage.getString("token")}`
+            }
+        })
+        console.log(response);
+    } catch(e){
+        console.log("Error making the goal: " + e);
+    }
+}
+
+export {signUp, logIn, getGoals, postGoal};
