@@ -17,7 +17,8 @@ const LoginInfo = function({navigation}){
 
     const signIn = async() =>{
         logIn(email, password);
-        successLogin();
+        if(storage.getString("token"))
+            successLogin();
         /*try{
             const response = await axios.post(AndroidUrl, {
                email: email,
