@@ -1,43 +1,33 @@
 import React, { useCallback, useState } from "react";
 import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
-import axios from "axios";
+import {useDispatch, useSelector} from 'react-redux';
 import {storage} from '../utils/createMMKV'
-import { logIn } from "../utils/backendCall";
 
-const AndroidUrl = 'http://10.0.2.2:8000/api/users/login'
+
+//const AndroidUrl = 'http://10.0.2.2:8000/api/users/login'
 
 const LoginInfo = function({navigation}){
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const dispatcher = useDispatch();
+    const usuario = useSelector(state => state.user);
+    console.log(usuario.data);
+
     const successLogin = () =>{
            navigation.navigate('GoalsPage');
     }
 
     const signIn = async() =>{
-        await logIn(email, password);
-        if(storage.getString("token"))
-            successLogin();
-        /*try{
-            const response = await axios.post(AndroidUrl, {
-               email: email,
-               password: password
-            })
-            console.log(response);
-            Alert.alert(response.data.message);
-            if(response.data.success){
-                const token = response.data.data.authToken;
-                //console.log(token);
-                storage.set("token", token);
-                console.log(storage.getString("token"));
-                successLogin();
-            }
-            
-        }catch(err){
-            console.log(err);
-            Alert.alert('Error something went wrong')
-        }*/
+        
+        dispatcher({type: 'USER_FETCH_REQUEST',
+            payload: { email, password }
+            });
+        console.log(usuario.data);
+
+        // if(storage.getString("token"))
+        //     successLogin();
 
     }
 

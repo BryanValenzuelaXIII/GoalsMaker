@@ -4,6 +4,7 @@ import {storage} from '../utils/createMMKV'
 import NewGoal from '../Components/NewGoal'
 import LogOut from '../Components/LogOut'
 import {getGoals} from '../utils/backendCall'
+import { useSelector} from 'react-redux';
 
 const GoalsPage = () => {
 
@@ -17,6 +18,9 @@ const GoalsPage = () => {
     const getGoals = async() =>{
         setGoals(getGoals());
     }
+
+    const usuario = useSelector(state => state.user);
+    console.log(usuario);
 
     return(
         <View style={styles.container}>

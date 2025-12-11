@@ -39,7 +39,10 @@ const signUp = async(userName, email, password) => {
 
 const logIn = async(email, password) => {
 
-    const AndroidUrl = '/login'
+    const AndroidUrl = '/users/login'
+
+    console.log("REQUEST URL:", url.defaults.baseURL + AndroidUrl);
+    console.log("REQUEST DATA:", { email, password });
 
     try{
             const response = await url.post(AndroidUrl, {
@@ -48,14 +51,14 @@ const logIn = async(email, password) => {
             })
             console.log(response);
             if(response.data.success){
-                // const token = response.data.data.authToken;
-                // storage.set("token", token);
-                // console.log(storage.getString("token"));
+                 const token = response.data.data.authToken;
+                 storage.set("token", token);
+                 console.log(storage.getString("token"));
                 return response;
             }
             return null;
         }catch(err){
-            console.log(err);
+            console.log("An error occurred: ", err);
             return err;
         }
 }

@@ -1,27 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
-import counterS from './userSlice'
+import { userInfoReducer, counterReducer } from './userSlice'
+import createSagaMiddleware from 'redux-saga'
+import mySaga from '../Sagas/goalsSagas'
+
+const sagaMiddleware = createSagaMiddleware()
 
 const store = configureStore({
   reducer: {
-    counter: counterS //counter is the name property in counterS
+    counter: counterReducer, //counter is the name property in counterS
+    user: userInfoReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(sagaMiddleware)
 })
 
+sagaMiddleware.run(mySaga)
+
 export default store;
-/*
-import {useSelector} from 'react-redux';
-
-const count = useSelector(state => state.counter.value) // do arrow function to get the state
-// get that state property counter which is saved(name prop) and the property vale
-*/
-
-/*
-import {usedispatch} from 'react-redux';
-
-function component{const dispatch = useDispatch()
-  onclick={()=> dispatch(incremnet())}
-}
-
-
-
-*/
